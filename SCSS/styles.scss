@@ -60,6 +60,7 @@ $fw-semi-bold: 600;
 $padding: 2em;
 $border-radius: 2.5em;
 $scale: 0.75;
+$img-width: 610px;
 
 /* App Styles */
 
@@ -72,17 +73,16 @@ body {
 }
 
 main {
-  position: relative;
-  display: flex;
-  // height: 100%;
-  flex-direction: column;
-  // grid-template-columns: 1fr;
+  display: grid;
+  grid-template-areas:
+    "logo"
+    "img"
+    "content";
 }
 
 .logo-container {
+  grid-area: logo;
   padding: $padding;
-  // padding-bottom: 1em;
-  order: 1;
 
   &__logo {
     transform: scale($scale, $scale);
@@ -90,19 +90,16 @@ main {
 }
 
 .hero{
-  order: 2;
-  height: fit-content;
+  grid-area: img;
 
   &__image {
-    width: 100%;
     object-fit: cover;
   }
 }
 
 .page-content {
-  order: 3;
+  grid-area: content;
   display: grid;
-  // flex-direction: column;
   gap: 1em;
   padding: $padding;
   padding-top: 0;
@@ -173,7 +170,6 @@ main {
   &__error-label {
     padding-left: 1.9em;
     color: $clr-primary-mid;
-    // display: none;
   }
 }
 
@@ -189,47 +185,24 @@ main {
 
     }
 
-@media only screen and (min-width: 1000px) {
+@media only screen and (min-width: 1200px) {
   body {
     background-image: url("../images/bg-pattern-desktop.svg");
+    background-size: cover;
     text-align: left;
   }
 
-  .hero {
-    order: 4;
-  }
-
-  [data-col='1'] {
-    grid-column: 1;
-
-    &.logo-container {
-      grid-row: 1;
-    }
-
-    &.page-content {
-      grid-row: 2/3;
-    }
-  }
-
-  [data-col='2'] {
-    grid-column: 2;
-    grid-row: 1/3;
-  }
-
   main {
-    display: grid;
-    $img-width: 610px;
+    grid-template-areas:
+    "logo    img"
+    "content img"
+    "....... img";
     grid-template-columns: calc(100vw - $img-width) $img-width;
     grid-template-rows: 30vh 50vh 20vh;
   }
 
   .page-content {
-    padding: 0 9em;
     padding: 0 20%;
-
-    > * {
-      height: fit-content;
-    }
 
     &__title {
       font-size: 4rem;
@@ -244,8 +217,6 @@ main {
   }
 
   .logo-container {
-    height: min-content;
-    padding: 4em 9em;
     padding: 4em 20% 1em;
 
     &__logo {
